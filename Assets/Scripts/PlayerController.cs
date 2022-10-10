@@ -7,14 +7,13 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 2f;
     public float lookSpeed = 60f;
+    public float moveSpeed = 2f;
     public float jumpPower = 8f;
     public float gravity = 9.91f;
     public float jumpTimeLeniency = 0.1f;
     float timeToStopBeingLenient = 0;
     public List<GameObject> disableWhileDead;
-    bool doubleJumpAvaible= false;
 
     private CharacterController controller;
     
@@ -29,15 +28,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        SetUpCharacterController();
+        controller = GetComponent<CharacterController>();
     }
 
-    private void SetUpCharacterController() {
-        controller = GetComponent<CharacterController>();
-        if (controller==null) {
-            Debug.LogError("player control not ");
-        }
-    }
 
 
     /// <summary>
@@ -50,7 +43,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
-
         ProcessMovement();
         ProcessRotation();
     }
@@ -63,12 +55,10 @@ public class PlayerController : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            doubleJumpAvaible = true;
             timeToStopBeingLenient = Time.time + jumpTimeLeniency;
             moveDirection = new Vector3(leftRightInput, 0, forwardBackwardInput);
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection =moveDirection* moveSpeed;
-
             if (jumpPressed)
             {
                 moveDirection.y = jumpPower;
@@ -82,11 +72,6 @@ public class PlayerController : MonoBehaviour
             if(jumpPressed && Time.time < timeToStopBeingLenient)
             {
                 moveDirection.y = jumpPower;
-            }
-            else if(jumpPressed && doubleJumpAvaible)
-            {
-                moveDirection.y = jumpPower;
-                doubleJumpAvaible = false;
             }
         }
 
