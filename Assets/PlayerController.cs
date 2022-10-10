@@ -13,14 +13,10 @@ public class PlayerController : MonoBehaviour
     public float gravity = 9.91f;
     public float jumpTimeLeniency = 0.1f;
     float timeToStopBeingLenient = 0;
-    public Shooter playerShooter;
-    public Health playerHealth;
-    public GameManager gameManager;
     public List<GameObject> disableWhileDead;
     bool doubleJumpAvaible= false;
 
     private CharacterController controller;
-    private InputManager inputManager;
     
 
     /// <summary>
@@ -34,7 +30,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         SetUpCharacterController();
-        SetUpInputManager();
     }
 
     private void SetUpCharacterController() {
@@ -44,10 +39,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SetUpInputManager()
-    {
-        inputManager = InputManager.instance;
-    }
 
     /// <summary>
     /// Description:
@@ -59,32 +50,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (playerHealth.currentHealth<=0)
-        {
-            foreach (GameObject inGameObject in disableWhileDead)
-            {
-                inGameObject.SetActive(false);
-            }
-            return;
-        }
-        else
-        {
-            foreach (GameObject inGameObject in disableWhileDead)
-            {
-                inGameObject.SetActive(true);
-            }
-        }
 
         ProcessMovement();
         ProcessRotation();
-        MorbCheck();
     }
     Vector3 moveDirection;
     void ProcessMovement()
     {
-        float leftRightInput = inputManager.horizontalMoveAxis;
-        float forwardBackwardInput = inputManager.verticalMoveAxis;
-        bool jumpPressed = inputManager.jumpPressed;
+        float leftRightInput = Input.GetAxis("Horizontal");
+        float forwardBackwardInput = Input.GetAxis("Vertical");
+        bool jumpPressed = Input.GetButtonDown("Jump");
 
         if (controller.isGrounded)
         {
@@ -127,17 +102,9 @@ public class PlayerController : MonoBehaviour
 
     void ProcessRotation()
     {
-        float horizontalLookInput = inputManager.horizontalLookAxis;
+        float horizontalLookInput = Input.GetAxis("Mouse X");
         Vector3 playerRotation = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(new Vector3(playerRotation.x, playerRotation.y + horizontalLookInput * lookSpeed * Time.deltaTime, playerRotation.z));
     }
 
-    void MorbCheck()
-    {
-        bool morbPressed = inputManager.morbPressed;
-        if (morbPressed && GameManager.morbs==100)
-        {
-            gameManager.StartMorb();
-        }
-    }
 }
