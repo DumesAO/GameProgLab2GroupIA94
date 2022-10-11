@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NextLevelScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public string level;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("adfkhadsukfhudhuegfuie");
+            SceneManager.LoadScene(level);
+        }
     }
 }

@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded&&moveDirection.y<0)
         {
             moveDirection.y = -0.3f;
-
         }
         controller.Move(moveDirection * Time.deltaTime);
     }
