@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float gravity = 9.91f;
     public float jumpTimeLeniency = 0.1f;
     float timeToStopBeingLenient = 0;
-    public List<GameObject> disableWhileDead;
+
 
     private CharacterController controller;
     

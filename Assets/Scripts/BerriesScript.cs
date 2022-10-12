@@ -18,7 +18,6 @@ public class BerriesScript : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log(col.collider.tag);
         if (col.collider.tag=="Berry")
         {
             CollectBerry();

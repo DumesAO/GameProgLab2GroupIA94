@@ -8,7 +8,6 @@ public class NextLevelScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("adfkhadsukfhudhuegfuie");
             SceneManager.LoadScene(level);
         }
     }
